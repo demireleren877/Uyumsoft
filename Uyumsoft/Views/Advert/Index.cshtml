@@ -1,0 +1,20 @@
+﻿@using Entities.Concrete
+@model List<Advert>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    
+</head>
+<body>
+    @foreach(var item in Model)
+    {
+        <h1>@item.Title</h1>
+    }
+</body>
+</html>

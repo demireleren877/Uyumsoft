@@ -1,0 +1,65 @@
+﻿@model List<Entities.Concrete.Application>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    table {
+        margin-left: 10%;
+        align-self: center;
+        white-space: nowrap;
+        table-layout: fixed;
+        text-overflow: ellipsis;
+        overflow: hidden
+    }
+
+    td {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden
+    }
+
+    th {
+        white-space: nowrap;
+    }
+</style>
+
+<br />
+<br />
+<br />
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Adayın İsmi</th>
+            <th>Adayın Okulu</th>
+            <th>Adayın Bölümü</th>
+            <th>Adayın Maili</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><a href="">@item.Employee.Name</a></td>
+                <td><a href="">@item.Employee.School</a></td>
+                <td><a href="">@item.Employee.Department</a></td>
+                <td><a href="">@item.Employee.Mail</a></td>
+            </tr>
+
+        }
+
+    </tbody>
+</table>
+
+<br />
+<br />
+<br />
+
+
+
+
+
+
+

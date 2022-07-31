@@ -1,0 +1,92 @@
+﻿@model List<Entities.Concrete.Advert>
+@{
+    ViewData["Title"] = "AdvertsForUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    table {
+        margin-left: 10%;
+        align-self: center;
+        white-space: nowrap;
+        table-layout: fixed;
+        text-overflow: ellipsis;
+        overflow: hidden
+    }
+
+    td {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden
+    }
+
+    th {
+        white-space: nowrap;
+    }
+</style>
+
+<br />
+<br />
+<br />
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>İlan ID</th>
+            <th>Sektör</th>
+            <th>Çalışma Şekli</th>
+            <th>Şehir</th>
+            <th>Yetkinlik</th>
+            <th>Başlık</th>
+            <th>Detay</th>
+            <th>Maaş</th>
+            <th>Son Tarih</th>
+            <th>Onay Durumu</th>
+            <th>Ofis Şekli</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            
+            <tr>
+                <td><a href="/Application/Index/@item.AdvertID">@item.AdvertID</a></td>
+                <td>@item.Sector.Name</td>
+                <td>@item.WayOfWork.Name</td>
+                <td>@item.City.Name</td>
+                <td>@item.Competence.Name</td>
+                <td>@item.Title</td>
+                <td style="overflow:hidden;text-overflow:ellipsis">@item.Details</td>
+                <td>@item.Salary</td>
+                <td>@item.Deadline</td>
+                <td class="@(item.IsApproved  ? "text-success" : "")">@(item.IsApproved  ? "Yayında" : "Onay Bekliyor")</td>
+                <td>@item.OnlineOrHybrid.Name</td>
+                <td style="text-align:center"><a href="" data-advID="@item.AdvertID" class="text-danger advSil">Sil</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+<br />
+<br />
+
+
+<script src="~/js/jquery.min.js"></script>
+<script>
+    $(".advSil").click(function() {
+
+        var sonuc = confirm("Kayıt Silinsin Mi?")
+        if (sonuc) {
+            var advID = $(this).attr("data-advID")
+            $.ajax({
+                type: "POST",
+                url: "/Advert/DeleteAdvert/" + advID,
+                success: function() {
+                    window.location.replace("/Advert/AdvertsForUser")
+                }
+            })
+        }
+    });
+</script>
+
+
