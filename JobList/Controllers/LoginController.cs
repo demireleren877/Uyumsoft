@@ -20,6 +20,7 @@ namespace JobList.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(string email,string password)
         {
+            LogManager logManager = new LogManager(new EFLogDal()); 
             Context c = new Context();
             var datavalue = c.Employers.FirstOrDefault(x => x.Mail == email && x.Password==password);
             var datavalue2 = c.Employees.FirstOrDefault(x => x.Mail == email && x.Password==password);
@@ -55,6 +56,10 @@ namespace JobList.Controllers
                 var userIdentity = new ClaimsIdentity(claims, "c");
                 ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(userIdentity);
                 await HttpContext.SignInAsync(claimsPrincipal);
+                Log log = new Log();
+                log.AdminID = c.Admins.Where(x => x.Mail == email).Select(x => x.AdminID).FirstOrDefault();
+                log.Time = DateTime.Now;
+                logManager.AddLog(log);
                 return RedirectToAction("Index", "Admin");
             }
             else { return View(); }
